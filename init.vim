@@ -11,6 +11,7 @@ Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'Rigellute/rigel'
 Plug 'antoinemadec/FixCursorHold.nvim'
 Plug 'nvim-lualine/lualine.nvim'
+Plug 'arkav/lualine-lsp-progress'
 Plug 'kyazdani42/nvim-web-devicons'
 
 
@@ -44,9 +45,7 @@ lua require('plugins/cmp')
 lua require('plugins/tree')
 lua require('plugins/treesitter')
 lua require('plugins/telescope')
-lua << END
-require('lualine').setup()
-END
+lua require('plugins/lualine')
 execute printf('source %s/vim/plugins/ale.vim', stdpath('config'))
 
 " General

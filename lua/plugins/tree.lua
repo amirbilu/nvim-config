@@ -23,3 +23,7 @@ require("nvim-tree").setup({
 
 vim.api.nvim_set_keymap('n', '<Leader>nn', ':NvimTreeToggle<cr>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>nf', ':NvimTreeFindFile<cr>', { noremap = true })
+-- vim.api.nvim_create_autocmd('BufEnter', {
+--   pattern = '*',
+--   command = 'NvimTreeFindFile | wincmd p'
+-- });
