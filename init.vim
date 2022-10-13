@@ -28,6 +28,7 @@ Plug 'kyazdani42/nvim-tree.lua'
 
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'godlygeek/tabular'
 Plug 'preservim/vim-markdown'
 Plug 'nvim-lua/plenary.nvim'
@@ -36,6 +37,13 @@ Plug 'nvim-telescope/telescope.nvim'
 " For ultisnips users.
 Plug 'SirVer/ultisnips'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+
+Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
+
+Plug 'github/copilot.vim'
+
+Plug 'hashivim/vim-terraform'
+
 call plug#end()
 
 
@@ -46,6 +54,7 @@ lua require('plugins/tree')
 lua require('plugins/treesitter')
 lua require('plugins/telescope')
 lua require('plugins/lualine')
+lua require('plugins/toggleterm')
 execute printf('source %s/vim/plugins/ale.vim', stdpath('config'))
 
 " General

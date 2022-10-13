@@ -15,6 +15,7 @@ let g:ale_fixers = {
 \   'sql': ['sqlfmt'],
 \   'json': ['prettier'],
 \   'lua': ['lua-format'],
+\   'terraform': ['terraform'],
 \}
 nnoremap ff :ALEFix<CR>
 autocmd FileType javascript,typescript,typescriptreact,css,java autocmd BufWritePre * :ALEFix 
