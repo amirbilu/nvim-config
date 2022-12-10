@@ -22,10 +22,9 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
-Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+" Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
 Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
 Plug 'kyazdani42/nvim-tree.lua'
-
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
@@ -34,15 +33,14 @@ Plug 'preservim/vim-markdown'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
-" For ultisnips users.
-Plug 'SirVer/ultisnips'
-Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
 Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
 
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
 
 Plug 'hashivim/vim-terraform'
+
+Plug 'codota/tabnine-nvim'
 
 call plug#end()
 
@@ -55,6 +53,7 @@ lua require('plugins/treesitter')
 lua require('plugins/telescope')
 lua require('plugins/lualine')
 lua require('plugins/toggleterm')
+lua require('tabnine').setup{debounce_ms=300, disable_auto_comment=true,accept_keymap="<Tab>",suggestion_color = {gui = "#808080", cterm = 244}}
 execute printf('source %s/vim/plugins/ale.vim', stdpath('config'))
 
 " General
@@ -69,8 +68,7 @@ nnoremap <leader>x :bdelete<CR>
 nnoremap <leader>t :terminal<CR>
 "
 
-"Black
 nnoremap <leader>bl :Black<CR>
 
 " Blamer
-let g:blamer_enabled = 1
+let g:blamer_enabled = 0

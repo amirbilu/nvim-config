@@ -1,21 +1,21 @@
 local cmp = require'cmp'
 local types = require('cmp.types')
-local tabnine = require('cmp_tabnine.config')
+-- local tabnine = require('cmp_tabnine.config')
 
 cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'cmp_tabnine' },
+    -- { name = 'cmp_tabnine' },
   }),
   snippet = {
     expand = function(args)
-      vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
     end,
   },
   experimental = {
-    ghost_text = true,
+    ghost_text = false,
   },
   mapping = cmp.mapping.preset.insert({
     ['<Tab>'] = {
@@ -33,15 +33,15 @@ cmp.setup({
   }
 )
 
-tabnine:setup({
-	max_lines = 1000;
-	max_num_results = 20;
-	sort = true;
-	run_on_every_keystroke = true;
-	snippet_placeholder = '..';
-	ignored_file_types = { -- default is not to ignore
-		-- uncomment to ignore in lua:
-		-- lua = true
-	};
-	show_prediction_strength = true;
-})
+-- tabnine:setup({
+-- 	max_lines = 1000;
+-- 	max_num_results = 20;
+-- 	sort = true;
+-- 	run_on_every_keystroke = true;
+-- 	snippet_placeholder = '..';
+-- 	ignored_file_types = { -- default is not to ignore
+-- 		-- uncomment to ignore in lua:
+-- 		-- lua = true
+-- 	};
+-- 	show_prediction_strength = true;
+-- })
