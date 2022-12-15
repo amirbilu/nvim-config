@@ -40,6 +40,9 @@ local M = require('packer').startup(function(use)
     -- others
     use 'tpope/vim-commentary'
 
+    -- lint / format
+    use 'dense-analysis/ale'
+
 end)
 
 for _, file in ipairs(vim.fn.readdir(vim.fn.stdpath('config') ..

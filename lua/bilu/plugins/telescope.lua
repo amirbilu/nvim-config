@@ -1,5 +1,6 @@
 local actions = require "telescope.actions"
 local config = require "telescope.config"
+local nnoremap = require('bilu.keymaps').nnoremap
 
 require('telescope').setup {
     defaults = {
@@ -18,11 +19,7 @@ require('telescope').setup {
     }
 }
 
-vim.api.nvim_set_keymap('n', '<Leader>p', ':Telescope find_files<cr>',
-                        {noremap = true})
-vim.api.nvim_set_keymap('n', '<Leader>/', ':Telescope live_grep<cr>',
-                        {noremap = true})
-vim.api.nvim_set_keymap('n', 'gr', ':Telescope lsp_references<cr>',
-                        {noremap = true})
-vim.api.nvim_set_keymap('n', 'gd', ':Telescope lsp_definitions<cr>',
-                        {noremap = true})
+nnoremap('p', 'Telescope find_files')
+nnoremap('/', 'Telescope live_grep')
+nnoremap('gr', 'Telescope lsp_references')
+nnoremap('gd', 'Telescope lsp_definitions')
