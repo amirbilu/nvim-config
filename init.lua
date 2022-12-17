@@ -4,5 +4,5 @@ require 'bilu.plugins'
 
 require 'bilu.keymaps'
 
-vim.cmd("colorscheme rigel")
+vim.cmd("colorscheme tokyonight")
 

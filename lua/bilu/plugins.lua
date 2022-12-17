@@ -4,14 +4,30 @@ local M = require('packer').startup(function(use)
 
   use 'nvim-lua/plenary.nvim'
 
-  use 'Rigellute/rigel'
+  use 'folke/tokyonight.nvim'
 
   -- lsp
-  use 'neovim/nvim-lspconfig'
+  use {
+    'VonHeikemen/lsp-zero.nvim',
+    requires = {
+      -- LSP Support
+      { 'neovim/nvim-lspconfig' },
+      { 'williamboman/mason.nvim' },
+      { 'williamboman/mason-lspconfig.nvim' },
 
-  use 'williamboman/nvim-lsp-installer'
+      -- Autocompletion
+      { 'hrsh7th/nvim-cmp' },
+      { 'hrsh7th/cmp-buffer' },
+      { 'hrsh7th/cmp-path' },
+      { 'saadparwaiz1/cmp_luasnip' },
+      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'hrsh7th/cmp-nvim-lua' },
 
-  use 'hrsh7th/nvim-cmp'
+      -- Snippets
+      { 'L3MON4D3/LuaSnip' },
+      { 'rafamadriz/friendly-snippets' },
+    }
+  }
 
   use { 'codota/tabnine-nvim', run = "./dl_binaries.sh" }
 
@@ -36,12 +52,6 @@ local M = require('packer').startup(function(use)
     },
     tag = 'nightly' -- optional, updated every week. (see issue #1193)
   }
-
-  -- others
-  use 'tpope/vim-commentary'
-
-  -- lint / format
-  use 'dense-analysis/ale'
 
 end)
 

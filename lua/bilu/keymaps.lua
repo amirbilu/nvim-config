@@ -1,5 +1,3 @@
-local leader = ","
-
 local nnoremap = function(key, map)
     vim.api.nvim_set_keymap("n", key, map, {noremap = true})
 end
@@ -21,5 +19,14 @@ nnoremap("<leader>f", ":ALEFix<CR>")
 -- nvim tree
 nnoremap("<leader>nn", "NvimTreeToggle")
 nnoremap("<leader>nf", "NvimTreeFindFile")
+
+-- lsp-zero
+nnoremap("<leader>f", ":LspZeroFormat<CR>")
+
+-- telescope
+nnoremap('<leader>p', ':Telescope find_files<CR>')
+nnoremap('<leader>/', ':Telescope live_grep<CR>')
+nnoremap('gr', ':Telescope lsp_references<CR>')
+nnoremap('gd', ':Telescope lsp_definitions<CR>')
 
 return {nnoremap = nnoremap}
