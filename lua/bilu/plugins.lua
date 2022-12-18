@@ -33,11 +33,13 @@ local M = require('packer').startup(function(use)
 
   use 'nvim-telescope/telescope.nvim'
 
+  -- treeistter
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
   use 'nvim-treesitter/nvim-treesitter-context'
 
   use 'tpope/vim-commentary'
+
   use 'JoosepAlviste/nvim-ts-context-commentstring'
 
   -- layout
