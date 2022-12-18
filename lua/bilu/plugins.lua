@@ -37,6 +37,7 @@ local M = require('packer').startup(function(use)
 
   use 'nvim-treesitter/nvim-treesitter-context'
 
+  use 'tpope/vim-commentary'
   use 'JoosepAlviste/nvim-ts-context-commentstring'
 
   -- layout
