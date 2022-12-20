@@ -23,13 +23,17 @@ nnoremap("<leader>nn", "NvimTreeToggle")
 nnoremap("<leader>nf", "NvimTreeFindFile")
 
 -- lsp-zero
-nnoremap("<leader>f", ":LspZeroFormat<CR>")
-api.nvim_create_autocmd("BufWrite", { pattern = { "*" }, command = "LspZeroFormat" })
+nnoremap("<leader>f", ":lua vim.lsp.buf.format()<CR>")
+nnoremap("<leader>ca", ":lua vim.lsp.buf.code_action()<CR>")
+nnoremap("<leader>rn", ":lua vim.lsp.buf.rename()<CR>")
+api.nvim_create_autocmd("BufWrite", { pattern = { "*" }, callback = vim.lsp.buf.format })
+-- api.nvim_create_autocmd("ModeChanged",
+--   { pattern = { "*" }, callback = function() if vim.fn.mode() == 'n' then vim.lsp.buf.format() end end })
 
 -- telescope
-nnoremap('<leader>p', ':Telescope find_files<CR>')
-nnoremap('<leader>/', ':Telescope live_grep<CR>')
-nnoremap('gr', ':Telescope lsp_references<CR>')
-nnoremap('gd', ':Telescope lsp_definitions<CR>')
+nnoremap("<leader>p", ":Telescope find_files<CR>")
+nnoremap("<leader>/", ":Telescope live_grep<CR>")
+nnoremap("gr", ":Telescope lsp_references<CR>")
+nnoremap("gd", ":Telescope lsp_definitions<CR>")
 
 return { nnoremap = nnoremap }

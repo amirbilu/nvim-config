@@ -5,6 +5,7 @@ local M = require('packer').startup(function(use)
   use 'nvim-lua/plenary.nvim'
 
   use 'folke/tokyonight.nvim'
+  use 'tpope/vim-fugitive'
 
   -- lsp
   use {
@@ -55,6 +56,9 @@ local M = require('packer').startup(function(use)
     },
     tag = 'nightly' -- optional, updated every week. (see issue #1193)
   }
+
+  -- format
+  use 'jose-elias-alvarez/null-ls.nvim'
 
 end)
 
