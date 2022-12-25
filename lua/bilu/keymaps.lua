@@ -12,7 +12,12 @@ local tnoremap = function(key, map)
     api.nvim_set_keymap("t", key, map, {noremap = true})
 end
 
+local cnoremap = function(key, map)
+    api.nvim_set_keymap("c", key, map, {noremap = true})
+end
+
 inoremap("jk", "<ESC>")
+cnoremap("jk", "<ESC><CR>")
 
 -- buffer navigation
 nnoremap("<leader>l", ":bnext<CR>")

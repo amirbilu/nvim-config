@@ -20,6 +20,11 @@ local M = require("packer").startup(function(use)
         }
     })
 
+    use({
+        "windwp/nvim-autopairs",
+        config = function() require("nvim-autopairs").setup({}) end
+    })
+
     use({"codota/tabnine-nvim", run = "./dl_binaries.sh"})
 
     use("nvim-telescope/telescope.nvim")
@@ -56,12 +61,11 @@ local M = require("packer").startup(function(use)
         tag = "*",
         config = function() require("toggleterm").setup() end
     })
-
 end)
 
-for _, file in ipairs(vim.fn.readdir(vim.fn.stdpath('config') ..
-                                         '/lua/bilu/plugins')) do
-    require('bilu.plugins.' .. file:gsub('%.lua$', ''))
+for _, file in ipairs(vim.fn.readdir(vim.fn.stdpath("config") ..
+                                         "/lua/bilu/plugins")) do
+    require("bilu.plugins." .. file:gsub("%.lua$", ""))
 end
 
 return M
