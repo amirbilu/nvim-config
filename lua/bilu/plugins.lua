@@ -44,6 +44,8 @@ local M = require("packer").startup(function(use)
         requires = {"kyazdani42/nvim-web-devicons", opt = true}
     })
 
+    use("nvim-lua/lsp-status.nvim")
+
     use({
         "nvim-tree/nvim-tree.lua",
         requires = {
