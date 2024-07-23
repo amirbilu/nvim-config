@@ -1,7 +1,7 @@
-require 'bilu.globals'
+require("bilu.globals")
 
-require 'bilu.plugins'
+require("bilu.plugins")
 
-require 'bilu.keymaps'
+require("bilu.keymaps")
 
-vim.cmd [[colorscheme tokyonight-night]]
+vim.cmd([[colorscheme tokyonight-night]])
