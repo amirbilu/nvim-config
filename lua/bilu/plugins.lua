@@ -9,7 +9,7 @@ local M = require("packer").startup(function(use)
 	-- lsp
 	use({
 		"VonHeikemen/lsp-zero.nvim",
-        branch = 'v3.x',
+		branch = "v3.x",
 		requires = {
 			-- LSP Support
 			{ "neovim/nvim-lspconfig" },
@@ -47,7 +47,7 @@ local M = require("packer").startup(function(use)
 
 	use("nvim-treesitter/nvim-treesitter-context")
 
-	use("tpope/vim-commentary")
+	use("JoosepAlviste/nvim-ts-context-commentstring")
 
 	-- layout
 	use({
