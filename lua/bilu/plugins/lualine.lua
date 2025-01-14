@@ -9,6 +9,6 @@ require("lualine").setup({
 	},
 	sections = {
 		lualine_c = { 'require("lsp-status").status()' },
-		lualine_x = { "tabnine" },
+		lualine_x = {},
 	},
 })

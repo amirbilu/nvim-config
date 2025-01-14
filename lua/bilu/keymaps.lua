@@ -59,11 +59,3 @@ nnoremap("gd", ":Telescope lsp_definitions<CR>")
 nnoremap("<leader>t", ":ToggleTerm<CR>")
 tnoremap("<esc>", "<C-\\><C-n>")
 tnoremap("jk", "<C-\\><C-n>")
-
--- tabnine
--- nnoremap("<leader>q", ":TabnineChat<CR>")
--- xnoremap("<leader>q", ":<C-U>TabnineChat<CR>")
-
-api.nvim_set_keymap("x", "<leader>q", "", { noremap = true, callback = require("tabnine.chat").open })
-api.nvim_set_keymap("i", "<leader>q", "", { noremap = true, callback = require("tabnine.chat").open })
-api.nvim_set_keymap("n", "<leader>q", "", { noremap = true, callback = require("tabnine.chat").open })

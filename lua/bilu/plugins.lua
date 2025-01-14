@@ -38,8 +38,6 @@ local M = require("packer").startup(function(use)
 
 	use("hashivim/vim-terraform")
 
-	use({ "~/Workspace/tabnine-nvim", run = "./dl_binaries.sh" })
-
 	use("nvim-telescope/telescope.nvim")
 
 	-- treeistter
