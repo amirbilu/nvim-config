@@ -38,7 +38,7 @@ local M = require("packer").startup(function(use)
 
 	use("hashivim/vim-terraform")
 
-	use({ "~/Workspace/tabnine-nvim", run = "./dl_binaries.sh" })
+	use("codota/tabnine-nvim")
 
 	use("nvim-telescope/telescope.nvim")
 
@@ -62,7 +62,6 @@ local M = require("packer").startup(function(use)
 		requires = {
 			"nvim-tree/nvim-web-devicons", -- optional, for file icons
 		},
-		tag = "nightly", -- optional, updated every week. (see issue #1193)
 	})
 
 	-- terminal
@@ -84,6 +83,16 @@ local M = require("packer").startup(function(use)
 	})
 
 	use("nvimtools/none-ls.nvim")
+	use({
+		"lucidph3nx/nvim-sops",
+		config = function()
+			require("nvim_sops").setup({
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+				-- refer to the configuration section below
+			})
+		end,
+	})
 end)
 
 for _, file in ipairs(vim.fn.readdir(vim.fn.stdpath("config") .. "/lua/bilu/plugins")) do
