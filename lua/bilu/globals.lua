@@ -10,9 +10,6 @@ vim.opt_local.spell = true
 -- Support context-based comments. Mainly for tsx. https://github.com/JoosepAlviste/nvim-ts-context-commentstring/wiki/Integrations#native-commenting-in-neovim-010
 local get_option = vim.filetype.get_option
 vim.filetype.get_option = function(filetype, option)
-	if option == "commentstring" then
-		print("here", require("ts_context_commentstring.internal").calculate_commentstring())
-	end
 	return option == "commentstring" and require("ts_context_commentstring.internal").calculate_commentstring()
 		or get_option(filetype, option)
 end

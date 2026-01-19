@@ -1,102 +1,112 @@
-local M = require("packer").startup(function(use)
-	use("wbthomason/packer.nvim")
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.uv.fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable",
+		lazypath,
+	})
+end
+vim.opt.rtp:prepend(lazypath)
 
-	use("nvim-lua/plenary.nvim")
+require("lazy").setup({
+	{ "nvim-lua/plenary.nvim" },
 
-	use("folke/tokyonight.nvim")
-	use("tpope/vim-fugitive")
+	{ "folke/tokyonight.nvim" },
+	{ "tpope/vim-fugitive" },
 
-	-- lsp
-	use({
-		"VonHeikemen/lsp-zero.nvim",
-		branch = "v3.x",
-		requires = {
-			-- LSP Support
-			{ "neovim/nvim-lspconfig" },
-			{ "williamboman/mason.nvim" },
-			{ "williamboman/mason-lspconfig.nvim" }, -- Autocompletion
-			{ "hrsh7th/nvim-cmp" },
+	-- lsp (using native Neovim 0.11+ APIs)
+	{ "neovim/nvim-lspconfig" }, -- Still useful for server configurations
+	{ "williamboman/mason.nvim" },
+	{ "williamboman/mason-lspconfig.nvim" },
+
+	-- Autocompletion
+	{
+		"hrsh7th/nvim-cmp",
+		dependencies = {
 			{ "hrsh7th/cmp-buffer" },
 			{ "hrsh7th/cmp-path" },
 			{ "saadparwaiz1/cmp_luasnip" },
 			{ "hrsh7th/cmp-nvim-lsp" },
-			{ "hrsh7th/cmp-nvim-lua" }, -- Snippets
-			{ "f3fora/cmp-spell" }, -- Snippets
-			{ "L3MON4D3/LuaSnip" },
-			{ "rafamadriz/friendly-snippets" },
+			{ "hrsh7th/cmp-nvim-lua" },
+			{ "f3fora/cmp-spell" },
 		},
-	})
+	},
 
-	-- 	use({
-	-- 		"windwp/nvim-autopairs",
-	-- 		config = function()
-	-- 			require("nvim-autopairs").setup({})
-	-- 		end,
-	-- 	})
+	-- Snippets
+	{
+		"L3MON4D3/LuaSnip",
+		dependencies = { "rafamadriz/friendly-snippets" },
+	},
 
-	use("simrat39/rust-tools.nvim")
+	{ "hashivim/vim-terraform" },
 
-	use("hashivim/vim-terraform")
+	{ "codota/tabnine-nvim", build = "./dl_binaries.sh" },
 
-	use("codota/tabnine-nvim")
+	{
+		dir = "~/Workspace/tabnine-cli.nvim",
+		config = function()
+			require("tabnine-cli").setup()
+		end,
+	},
 
-	use("nvim-telescope/telescope.nvim")
+	{ "nvim-telescope/telescope.nvim" },
 
-	-- treeistter
-	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
+	-- treesitter
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+	},
 
-	use("nvim-treesitter/nvim-treesitter-context")
+	{ "nvim-treesitter/nvim-treesitter-context" },
 
-	use("JoosepAlviste/nvim-ts-context-commentstring")
+	{ "JoosepAlviste/nvim-ts-context-commentstring" },
 
 	-- layout
-	use({
+	{
 		"nvim-lualine/lualine.nvim",
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
-	})
+		dependencies = { "kyazdani42/nvim-web-devicons" },
+	},
 
-	use("nvim-lua/lsp-status.nvim")
+	{ "nvim-lua/lsp-status.nvim" },
 
-	use({
+	{
 		"nvim-tree/nvim-tree.lua",
-		requires = {
-			"nvim-tree/nvim-web-devicons", -- optional, for file icons
-		},
-	})
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
 
 	-- terminal
-	use({
+	{
 		"akinsho/toggleterm.nvim",
-		tag = "*",
+		version = "*",
 		config = function()
 			require("toggleterm").setup()
 		end,
-	})
+	},
 
-	use("mfussenegger/nvim-dap")
+	{ "mfussenegger/nvim-dap" },
 
-	use({
+	{
 		"ellisonleao/glow.nvim",
 		config = function()
 			require("glow").setup({ glow_path = "/usr/bin/glow" })
 		end,
-	})
+	},
 
-	use("nvimtools/none-ls.nvim")
-	use({
+	{ "nvimtools/none-ls.nvim" },
+
+	{
 		"lucidph3nx/nvim-sops",
 		config = function()
-			require("nvim_sops").setup({
-				-- your configuration comes here
-				-- or leave it empty to use the default settings
-				-- refer to the configuration section below
-			})
+			require("nvim_sops").setup({})
 		end,
-	})
-end)
+	},
+})
 
+-- Load plugin configurations
 for _, file in ipairs(vim.fn.readdir(vim.fn.stdpath("config") .. "/lua/bilu/plugins")) do
 	require("bilu.plugins." .. file:gsub("%.lua$", ""))
 end
-
-return M

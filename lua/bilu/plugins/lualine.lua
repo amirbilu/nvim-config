@@ -8,7 +8,13 @@ require("lualine").setup({
 		lualine_z = {},
 	},
 	sections = {
-		lualine_c = { 'require("lsp-status").status()' },
+		lualine_c = {
+			{
+				function()
+					return vim.lsp.status()
+				end,
+			},
+		},
 		lualine_x = { "tabnine" },
 	},
 })
