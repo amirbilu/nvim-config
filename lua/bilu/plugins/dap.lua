@@ -77,8 +77,11 @@ dap.configurations.rust = {
 
 -- Load .vscode/launch.json configurations
 local vscode = require("dap.ext.vscode")
-vscode.load_launchjs(nil, {
+local ok, err = pcall(vscode.load_launchjs, nil, {
 	["pwa-node"] = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
 	["codelldb"] = { "rust" },
 	["lldb"] = { "rust" },
 })
+if not ok then
+	vim.notify("DAP: Failed to load launch.json: " .. tostring(err), vim.log.levels.WARN)
+end
