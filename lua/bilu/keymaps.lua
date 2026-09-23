@@ -16,31 +16,62 @@ map("n", "<leader>l", "<cmd>bnext<CR>")
 map("n", "<leader>h", "<cmd>bprevious<CR>")
 map("n", "<leader>x", "<cmd>bdelete<CR>")
 
--- nvim tree
-map("n", "<leader>nn", "<cmd>NvimTreeToggle<CR>")
-map("n", "<leader>nf", "<cmd>NvimTreeFindFile<CR>")
+-- File explorer
+map("n", "<leader>nn", function()
+	Snacks.explorer()
+end, { desc = "Toggle explorer" })
+map("n", "<leader>nf", function()
+	Snacks.explorer.reveal({ buf = 0 })
+end, { desc = "Reveal current file" })
 
 -- LSP
-map("n", "<leader>f", vim.lsp.buf.format, { desc = "Format buffer" })
+map("n", "<leader>f", function()
+	require("conform").format({ async = true, lsp_format = "fallback" })
+end, { desc = "Format buffer" })
 map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
 map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
-vim.api.nvim_create_autocmd("BufWrite", { pattern = { "*" }, callback = vim.lsp.buf.format })
+-- Picker
+map("n", "<leader>p", function()
+	Snacks.picker.files()
+end, { desc = "Find files" })
+map("n", "<leader>/", function()
+	Snacks.picker.grep()
+end, { desc = "Search text" })
+map("n", "gr", function()
+	Snacks.picker.lsp_references()
+end, { desc = "References" })
+map("n", "gd", function()
+	Snacks.picker.lsp_definitions()
+end, { desc = "Definitions" })
 
--- Telescope
-map("n", "<leader>p", "<cmd>Telescope find_files<CR>")
-map("n", "<leader>/", "<cmd>Telescope live_grep<CR>")
-map("n", "gr", "<cmd>Telescope lsp_references<CR>")
-map("n", "gd", "<cmd>Telescope lsp_definitions<CR>")
+-- Claude Code
+map("n", "<leader>ac", "<cmd>ClaudeCode<CR>", { desc = "Toggle Claude Code" })
+map("n", "<leader>af", "<cmd>ClaudeCodeFocus<CR>", { desc = "Focus Claude Code" })
+map("v", "<leader>as", "<cmd>ClaudeCodeSend<CR>", { desc = "Send selection to Claude" })
+
+-- Codex
+map("n", "<leader>cc", "<cmd>CodexFocus<CR>", { desc = "Focus Codex" })
+map("n", "<leader>cf", "<cmd>CodexAdd<CR>", { desc = "Add current file to Codex" })
+map("v", "<leader>cs", ":<C-U>CodexSendVisual<CR>", { desc = "Send selection to Codex" })
+
+-- Plugin manager list navigation
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "lazy",
+	callback = function(event)
+		map("n", "<C-j>", "]]", { buffer = event.buf, desc = "Next plugin" })
+		map("n", "<C-k>", "[[", { buffer = event.buf, desc = "Previous plugin" })
+		map("n", "<C-o>", "<CR>", { buffer = event.buf, desc = "Plugin details" })
+	end,
+})
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "mason",
+	callback = function(event)
+		map("n", "<C-j>", "j", { buffer = event.buf, desc = "Next package" })
+		map("n", "<C-k>", "k", { buffer = event.buf, desc = "Previous package" })
+	end,
+})
 
 -- Toggle terminal
 map("n", "<leader>t", "<cmd>ToggleTerm<CR>")
 map("t", "<esc>", "<C-\\><C-n>")
 map("t", "jk", "<C-\\><C-n>")
-
--- Tabnine chat
-map({ "n", "i", "x" }, "<leader>q", require("tabnine.chat").open, { desc = "Open Tabnine chat" })
-
--- Tabnine CLI
-map("n", "<leader>tt", "<cmd>TabnineCliToggle<cr>", { desc = "Toggle Tabnine CLI" })
-map("n", "<leader>ta", "<cmd>TabnineCliAcceptDiff<cr>", { desc = "Accept Tabnine diff" })
-map("n", "<leader>tr", "<cmd>TabnineCliRejectDiff<cr>", { desc = "Reject Tabnine diff" })

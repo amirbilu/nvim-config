@@ -3,9 +3,8 @@ require("dap").adapters["pwa-node"] = {
 	host = "localhost",
 	port = "${port}",
 	executable = {
-		command = "node",
-		-- 💀 Make sure to update this path to point to your installation
-		args = { "/home/bilu/Downloads/dap/js-debug/src/dapDebugServer.js", "${port}" },
+		command = vim.fn.stdpath("data") .. "/mason/bin/js-debug-adapter",
+		args = { "${port}" },
 	},
 }
 
@@ -74,14 +73,3 @@ dap.configurations.rust = {
 		stopOnEntry = false,
 	},
 }
-
--- Load .vscode/launch.json configurations
-local vscode = require("dap.ext.vscode")
-local ok, err = pcall(vscode.load_launchjs, nil, {
-	["pwa-node"] = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
-	["codelldb"] = { "rust" },
-	["lldb"] = { "rust" },
-})
-if not ok then
-	vim.notify("DAP: Failed to load launch.json: " .. tostring(err), vim.log.levels.WARN)
-end

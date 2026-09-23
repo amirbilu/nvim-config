@@ -5,7 +5,12 @@ vim.o.smarttab = true
 vim.o.number = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 2
-vim.opt_local.spell = true
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "markdown", "gitcommit", "text" },
+	callback = function()
+		vim.opt_local.spell = true
+	end,
+})
 
 -- Support context-based comments. Mainly for tsx. https://github.com/JoosepAlviste/nvim-ts-context-commentstring/wiki/Integrations#native-commenting-in-neovim-010
 local get_option = vim.filetype.get_option

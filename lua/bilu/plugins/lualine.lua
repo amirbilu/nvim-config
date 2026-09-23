@@ -15,6 +15,6 @@ require("lualine").setup({
 				end,
 			},
 		},
-		lualine_x = { "tabnine" },
+		lualine_x = {},
 	},
 })

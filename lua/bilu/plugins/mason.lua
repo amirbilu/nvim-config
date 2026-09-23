@@ -1,11 +1,27 @@
-require("mason").setup({})
+require("mason").setup({
+	ui = { keymaps = { toggle_package_expand = "<C-o>" } },
+})
+
+require("mason-tool-installer").setup({
+	ensure_installed = { "stylua", "prettier", "glow", "js-debug-adapter", "codelldb" },
+	run_on_start = true,
+	auto_update = false,
+})
 
 -- Define LSP server configurations using the new vim.lsp.config() API (Neovim 0.11+)
+vim.lsp.config("*", {
+	capabilities = require("blink.cmp").get_lsp_capabilities(),
+})
+
 vim.lsp.config("rust_analyzer", {
 	settings = {
 		["rust-analyzer"] = {
 			cargo = {
-				features = { "onprem" },
+				-- "all" = analyze with every feature enabled, so feature-gated
+				-- code (e.g. the agent's #[cfg(feature = "ebpf")] collector) isn't
+				-- grayed out. Per-crate features differ across repos, and "all"
+				-- avoids "unknown feature" errors a fixed list would cause.
+				features = "all",
 				-- Don't rebuild proc macros on every save
 				buildScripts = {
 					rebuildOnSave = false,
@@ -43,37 +59,21 @@ vim.lsp.config("omnisharp", {})
 -- Enable LSP servers
 vim.lsp.enable({ "rust_analyzer", "ts_ls", "pyright", "omnisharp" })
 
--- Start LSP servers immediately on VimEnter for early indexing
-vim.api.nvim_create_autocmd("VimEnter", {
-	callback = function()
-		local cwd = vim.fn.getcwd()
-
-		-- Map of root markers to LSP servers
-		local server_markers = {
-			rust_analyzer = { "Cargo.toml" },
-			ts_ls = { "package.json", "tsconfig.json", "jsconfig.json" },
-			pyright = { "pyrightconfig.json", "pyproject.toml", "setup.py", "requirements.txt" },
-			omnisharp = { "*.sln", "*.csproj" },
-		}
-
-		vim.defer_fn(function()
-			for server, markers in pairs(server_markers) do
-				for _, marker in ipairs(markers) do
-					local found = vim.fn.glob(cwd .. "/" .. marker)
-					if found ~= "" then
-						-- Trigger LSP start by opening a relevant file or using LspStart
-						vim.cmd("LspStart " .. server)
-						break
-					end
-				end
-			end
-		end, 0)
-	end,
-})
+-- :LspRestart — native vim.lsp has no restart command, so define one. Stops all
+-- clients and re-attaches by reloading the current buffer once the (async) stop
+-- settles, which makes servers re-read config (e.g. rust-analyzer.toml features).
+vim.api.nvim_create_user_command("LspRestart", function()
+	for _, c in ipairs(vim.lsp.get_clients()) do
+		c:stop()
+	end
+	vim.defer_fn(function()
+		vim.cmd("edit")
+	end, 300)
+end, { desc = "Restart LSP clients" })
 
 require("mason-lspconfig").setup({
 	-- Replace the language servers listed here
 	-- with the ones you want to install
 	ensure_installed = { "ts_ls", "rust_analyzer", "pyright", "omnisharp" },
-	-- No handlers needed - servers are configured above with vim.lsp.config()
+	automatic_enable = false, -- Servers are enabled above, including system-installed ones.
 })
